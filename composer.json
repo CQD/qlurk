@@ -1,4 +1,15 @@
 {
+    "name": "qlurk/qlurk",
+    "type": "library",
+    "description": "Qlurk is a simple to use Plurk library",
+    "keywords": ["plurk", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CQD",
+            "homepage": "https://github.com/cqd"
+        }
+    ],
     "autoload" : {
         "psr-4": {
             "Qlurk\\" : "src/"
