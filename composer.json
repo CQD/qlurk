@@ -1,4 +1,9 @@
 {
+    "autoload" : {
+        "psr-4": {
+            "Qlurk\\" : "src/"
+        }
+    },
     "require": {
         "guzzlehttp/guzzle": "^6.2"
     }
