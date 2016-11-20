@@ -17,7 +17,7 @@ class ApiClient
     private $http_client;
 
     private $options = [
-        'base_uri' => 'http://www.plurk.com',
+        'base_uri' => 'https://www.plurk.com',
     ];
 
     public function __construct($consumer_key, $consumer_secret, $token_key, $token_secret)
