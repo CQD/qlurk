@@ -40,7 +40,7 @@ class APP
         "Users",
     ];
 
-    public function __construct($consumer_key, $consumer_secret, $token_key, $token_secret)
+    public function __construct(ApiClient $api_client)
     {
         foreach ($this->class_names as $class_name) {
             $lower_class_name = strtolower($class_name);
@@ -48,7 +48,7 @@ class APP
             $this->class_names[$lower_class_name] = $class_name;
             unset($this->class_names[$class_name]);
         }
-        $this->api_client = new ApiClient($consumer_key, $consumer_secret, $token_key, $token_secret);
+        $this->api_client = $api_client;
     }
 
     public function __get($key)
@@ -61,10 +61,16 @@ class APP
 
         if (!$handler) {
             $class_name = sprintf("\\Qlurk\\APP\\%s", $this->class_names[$key]);
-            $handler = new $class_name($this->api_client);
+            $handler = new $class_name($this);
             $this->handlers[$key] = $handler;
         }
 
         return $handler;
     }
+
+    public function call($path, $params = [])
+    {
+        return $this->api_client->call($path, $params);
+    }
+
 }
