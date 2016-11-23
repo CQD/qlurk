@@ -2,6 +2,8 @@
 
 namespace Qlurk\APP;
 use Qlurk\APP;
+use Qlurk\Data\Plurk;
+use Qlurk\Data\User;
 
 /**
  * API request/response handler for Timeline
@@ -17,5 +19,13 @@ class Timeline
     }
 
     /////////////////////////////////////////////////////////////////////////
+
+    public function getPublicPlurks($params)
+    {
+        $data = $this->app->call('/APP/Timeline/getPublicPlurks', $params)['body'];
+        $data['plurks'] = Plurk::makeArray($data['plurks'], $this->app);
+        $data['plurk_users'] = User::makeArray($data['plurk_users'], $this->app);
+        return $data;
+    }
 
 }
