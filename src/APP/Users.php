@@ -1,7 +1,9 @@
 <?php
 
 namespace Qlurk\APP;
+use Qlurk\ApiClient;
 use Qlurk\APP;
+use Qlurk\Data\User;
 
 /**
  * API request/response handler for Users
@@ -17,4 +19,14 @@ class Users
     }
 
     ////////////////////////////////////////////////////////
+
+    /**
+     * @return User
+     */
+    public function me()
+    {
+        $data = $this->app->call('/APP/Users/me');
+        $me = new User($data['body'], $this->app);
+        return $me;
+    }
 }
