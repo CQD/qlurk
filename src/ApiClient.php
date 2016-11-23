@@ -18,7 +18,10 @@ class ApiClient
 
     private $options = [
         'base_uri' => 'https://www.plurk.com',
+        'request_log' => false,
     ];
+
+    private $request_log = [];
 
     public function __construct($consumer_key, $consumer_secret, $token_key, $token_secret)
     {
@@ -39,6 +42,10 @@ class ApiClient
 
     private function POST(Request $request)
     {
+        if ($this->options['request_log']) {
+            $this->request_log[] = $request;
+        }
+
         $resp = $this->getHttpClient()->request('POST', $request->path, [
             'headers' => $request->headers,
             'form_params' => $request->params,
@@ -137,5 +144,27 @@ class ApiClient
         }
 
         return $this->http_client;
+    }
+
+    //////////////////////////////////////////////
+
+    public function enableRequestLogging()
+    {
+        $this->options['request_log'] = true;
+    }
+
+    public function disableRequestLogging()
+    {
+        $this->options['request_log'] = false;
+    }
+
+    public function getLoggedRequests()
+    {
+        return $this->request_log;
+    }
+
+    public function clearLoggedRequests()
+    {
+        $this->request_log = [];
     }
 }
