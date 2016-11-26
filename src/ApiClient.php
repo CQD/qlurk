@@ -163,6 +163,11 @@ class ApiClient
         return $this->request_log;
     }
 
+    public function loggedRequestsCount()
+    {
+        return count($this->request_log);
+    }
+
     public function clearLoggedRequests()
     {
         $this->request_log = [];
