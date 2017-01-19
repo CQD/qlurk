@@ -14,9 +14,9 @@ class User
     protected $avatar;
     protected $location;
     protected $default_lang;
-    protected $date_of_birth;
-    protected $bday_privacy;
-    protected $full_name;
+    protected $dateOfBirth;
+    protected $bdayPrivary;
+    protected $fullName;
     protected $gender;
     protected $karma;
     protected $recruited;
