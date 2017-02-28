@@ -52,4 +52,11 @@ class User
         $params['user_id'] = $this->id;
         return $this->app->timeline->getPublicPlurks($params)['plurks'];
     }
+
+    public function __get($name)
+    {
+        if (!property_exists($this, $name) || 'app' == $name) {
+            throw new \InvalidArgumentException('property is not found');
+        }
+    }
 }
