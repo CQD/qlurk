@@ -43,11 +43,6 @@ class User
         return $rows;
     }
 
-    public function toArray()
-    {
-        return get_object_vars($this);
-    }
-
     /**
      * @param array $params
      * @return \Qlurk\Data\Plurk[]
