@@ -6,21 +6,21 @@ use Qlurk\APP;
 
 class User
 {
-    public $id;
-    public $nick_name;
-    public $display_name;
-    public $premium;
-    public $has_profile_image;
-    public $avatar;
-    public $location;
-    public $default_lang;
-    public $date_of_birth;
-    public $bday_privacy;
-    public $full_name;
-    public $gender;
-    public $karma;
-    public $recruited;
-    public $relationship;
+    protected $id;
+    protected $nick_name;
+    protected $display_name;
+    protected $premium;
+    protected $has_profile_image;
+    protected $avatar;
+    protected $location;
+    protected $default_lang;
+    protected $date_of_birth;
+    protected $bday_privacy;
+    protected $full_name;
+    protected $gender;
+    protected $karma;
+    protected $recruited;
+    protected $relationship;
 
     private $app;
 
@@ -51,5 +51,12 @@ class User
     {
         $params['user_id'] = $this->id;
         return $this->app->timeline->getPublicPlurks($params)['plurks'];
+    }
+
+    public function __get($name)
+    {
+        if (!property_exists($this, $name) || 'app' == $name) {
+            throw new \InvalidArgumentException('property is not found');
+        }
     }
 }
