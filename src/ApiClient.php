@@ -117,6 +117,7 @@ class ApiClient
         $nonce = '';
         $rands = unpack("N{$len}", openssl_random_pseudo_bytes($len * 4));
         foreach ($rands as $rand) {
+            $rand = abs($rand); // Sometimes it's minus.... why.....
             $nonce .= $chars[$rand % $pool_size];
         }
         return $nonce;
