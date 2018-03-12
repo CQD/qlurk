@@ -23,7 +23,7 @@ class ApiClient
 
     private $request_log = [];
 
-    public function __construct($consumer_key, $consumer_secret, $token_key, $token_secret)
+    public function __construct($consumer_key, $consumer_secret, $token_key = null, $token_secret = null)
     {
         $this->options['consumer_key'] = $consumer_key;
         $this->options['consumer_secret'] = $consumer_secret;
@@ -134,6 +134,12 @@ class ApiClient
     public function setBaseUri($base_uri)
     {
         $this->options['base_uri'] = $base_uri;
+    }
+
+    public function setAccessToken($token, $tokenSecret)
+    {
+        $this->options['token_key'] = $token;
+        $this->options['token_secret'] = $tokenSecret;
     }
 
     private function getHttpClient()
