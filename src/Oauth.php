@@ -15,7 +15,7 @@ class Oauth
 
     public function getRequestToken()
     {
-        $r = $this->apiClient->call('/OAuth/request_token')['body'];
+        $r = $this->apiClient->call('/OAuth/request_token');
         $token = $r['oauth_token'];
         $secret = $r['oauth_token_secret'];
         $this->apiClient->setAccessToken($token, $secret);
@@ -51,7 +51,7 @@ class Oauth
         $r = $this->apiClient->call('/OAuth/access_token', [
             'oauth_verifier' => $verifier,
             'oauth_token' => $this->apiClient->token_key,
-        ])['body'];
+        ]);
         $this->apiClient->setAccessToken($r['oauth_token'], $r['oauth_token_secret']);
         return $r;
     }

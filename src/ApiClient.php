@@ -49,22 +49,17 @@ class ApiClient
         $resp = $this->getHttpClient()->request('POST', $request->path, [
             'headers' => $request->headers,
             'form_params' => $request->params,
-            'http_errors' => false,
         ]);
 
         $status_code = (int) $resp->getStatusCode();
         $bodyRaw = (string) $resp->getBody();
 
         $body = json_decode($bodyRaw, true);
-        if (!$body) {
+        if (!$body && strlen($bodyRaw) > 0 && '<' !== $bodyRaw[0]) {
             parse_str($bodyRaw, $body);
         }
 
-        return [
-            'success' => (200 === $status_code),
-            'status' => $status_code,
-            'body' => $body,
-        ];
+        return $body;
     }
 
     private function sign(Request $request)
