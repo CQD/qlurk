@@ -78,6 +78,11 @@ class ApiClient
             'oauth_signature_method' => 'HMAC-SHA1',
         ];
 
+        if (isset($request->params['oauth_verifier'])) {
+            $oauth_params['oauth_verifier'] = $request->params['oauth_verifier'];
+            unset($request->params['oauth_verifier']);
+        }
+
         $data_to_sign = sprintf(
             '%s&%s&%s',
             rawurlencode($request->method),
