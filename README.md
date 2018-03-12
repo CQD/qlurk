@@ -7,6 +7,30 @@ $resp = $qlurk->call('/APP/Timeline/getPlurk', ['plurk_id' => 134]);
 var_dump($resp);
 ```
 
+```php
+// ask for request token
+$qlurk = new \Qlurk\ApiClient(CONSUMER_KEY, CONSUMER_SECRET);
+$oauth = new Oauth($qlurk);
+
+$r = $oauth->getRequestToken();
+$token = $r['oauth_token'];
+$tokenSecret = $r['oauth_token_secret'];
+
+// save $token and $tokenSecret to somewhere...
+
+// auth via user interaction
+// call back with oauth_token and oauth_verifier
+
+// exchange request token for access token
+$qlurk = new \Qlurk\ApiClient(CONSUMER_KEY, CONSUMER_SECRET);
+$oauth = new Oauth($qlurk);
+$tokenSecret = getSecretFromStorage($token);
+$oauth->getAccessToken($verifier, $token, $tokenSecret);
+
+$resp = $qlurk->call('/APP/Timeline/getPlurk', ['plurk_id' => 134]);
+var_dump($resp);
+```
+
 This package is inspired by [clsung](https://github.com/clsung)'s [plurkoauth](https://github.com/clsung/plurkoauth)
 
 # Installation
