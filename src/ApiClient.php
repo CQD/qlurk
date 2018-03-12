@@ -53,10 +53,17 @@ class ApiClient
         ]);
 
         $status_code = (int) $resp->getStatusCode();
+        $bodyRaw = (string) $resp->getBody();
+
+        $body = json_decode($bodyRaw, true);
+        if (!$body) {
+            parse_str($bodyRaw, $body);
+        }
+
         return [
             'success' => (200 === $status_code),
             'status' => $status_code,
-            'body' => json_decode((string) $resp->getBody(), true),
+            'body' => $body,
         ];
     }
 
