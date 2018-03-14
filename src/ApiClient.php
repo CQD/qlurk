@@ -38,6 +38,17 @@ class ApiClient
         return $this->POST($request);
     }
 
+    public function forgeRequest($path, $params = [])
+    {
+        $request = new Request('POST', $path, $params);
+        $request = $this->sign($request);
+        return [
+            'url' => sprintf("%s%s", rtrim($this->options['base_uri'], '/'), $request->path),
+            'header' => $request->headers,
+            'param' => $request->params,
+        ];
+    }
+
     ///////////////////////////////////////////////
 
     private function POST(Request $request)
