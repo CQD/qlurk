@@ -1,5 +1,7 @@
 .PHONY: installNoDev installWithDev e2e
 
+-include config.mk
+
 installNoDev:
 	composer install -o --prefer-dist --no-dev
 
