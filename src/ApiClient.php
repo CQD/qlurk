@@ -57,10 +57,7 @@ class ApiClient
             $this->request_log[] = $request;
         }
 
-        $resp = $this->getHttpClient()->request('POST', $request->path, [
-            'headers' => $request->headers,
-            'form_params' => $request->params,
-        ]);
+        $resp = $this->getHttpClient()->request('POST', $request->path, $this->guzzleOption($request));
 
         $status_code = (int) $resp->getStatusCode();
         $bodyRaw = (string) $resp->getBody();
@@ -71,6 +68,25 @@ class ApiClient
         }
 
         return $body;
+    }
+
+    private function guzzleOption($request)
+    {
+        $config = [
+            'headers' => $request->headers,
+        ];
+
+        if ($request->multipart) {
+            foreach ($request->multipart as $key => $value) {
+                $config['multipart'][] = [
+                    'name' => $key,
+                    'contents' => $value,
+                ];
+            }
+        } elseif ($request->params) {
+            $config['form_params'] = $request->params;
+        }
+        return $config;
     }
 
     private function sign(Request $request)
