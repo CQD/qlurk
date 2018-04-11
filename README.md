@@ -1,4 +1,7 @@
 # Qlurk, the Plurk API library
+
+[![Build result](https://api.travis-ci.org/CQD/qlurk.svg?branch=master)](https://travis-ci.org/CQD/qlurk)
+
 `Qlurk` is a simple [Plurk API](https://www.plurk.com/API) library written in PHP
 
 ```php
