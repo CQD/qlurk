@@ -34,6 +34,12 @@ class ApiTest extends TestCase
     {
         return [
             [
+                '/APP/echo',
+                ['data' => 'miew miew miew'],
+                ['data' => 'miew miew miew']
+
+            ],
+            [
                 '/APP/Profile/getPublicProfile',
                 [
                     'plurks.0.owner_id' => 14533660,
