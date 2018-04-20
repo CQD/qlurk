@@ -81,6 +81,8 @@ class ApiClient
                 $config['multipart'][] = [
                     'name' => $key,
                     'contents' => $value,
+                    'filename' => 'dummy.jpg', // XXX can be removed after server signature bug fix
+                                               // https://github.com/CQD/qlurk/issues/2
                 ];
             }
         } elseif ($request->params) {
