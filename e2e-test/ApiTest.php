@@ -18,13 +18,13 @@ class ApiTest extends TestCase
      */
     public function testApi($path, $expected, $params = [])
     {
+        $result = static::$apiClient->call($path, $params);
         if (is_array($expected)) {
-            $result = static::$apiClient->call($path, $params);
             foreach ($expected as $key => $expectedValue) {
                 $this->assertEquals($expectedValue, $this->deepValue($key, $result));
             }
         } elseif (is_callable($expected)) {
-            $expected($params);
+            $expected($params, $result);
         } else {
             throw new \Exception("Can not verify result");
         }
@@ -33,6 +33,12 @@ class ApiTest extends TestCase
     public function apiProvider()
     {
         return [
+            [
+                '/APP/echo',
+                ['data' => 'miew miew miew'],
+                ['data' => 'miew miew miew']
+
+            ],
             [
                 '/APP/Profile/getPublicProfile',
                 [
@@ -52,7 +58,34 @@ class ApiTest extends TestCase
                 ],
                 ['plurk_id' => 1372880647]
             ],
+            [
+                '/APP/Timeline/uploadPicture',
+                function($params, $result){
+                    $this->assertTrue($this->isImageURL($result['full']) && $this->isImageURL($result['thumbnail']), json_encode($result));
+                },
+                ['image' => file_get_contents(__DIR__ . '/16.jpg')],
+            ],
+            [
+                '/APP/Users/updateAvatar',
+                [
+                    'id' => 14533660,
+                ],
+                ['profile_image' => file_get_contents(__DIR__ . '/256.jpg')],
+            ],
         ];
+    }
+
+    private function isImageURL($url)
+    {
+        $suffix = substr($url, -4);
+        if (!in_array($suffix, ['.jpg', '.png', '.gif'])) {
+            return false;
+        }
+        $prefix = explode('://', $url, 2)[0];
+        if (!in_array($prefix, ['http', 'https'])) {
+            return false;
+        }
+        return true;
     }
 
     private function deepValue($key, $v)

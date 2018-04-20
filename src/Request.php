@@ -14,17 +14,24 @@ class Request
     public $path;
     public $params = [];
     public $headers = [];
+    public $multipart = [];
 
     public function __construct($method, $path, $params = [], $headers = [])
     {
         $method = strtoupper($method);
-        if ('POST' === $method) {
-            $this->headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        switch ($path) {
+        case '/APP/Timeline/uploadPicture':
+        case '/APP/Users/updateAvatar':
+            foreach ($params as $key => $value) {
+                $this->multipart[$key] = $value;
+            }
+            break;
+        default:
+            $this->params = $params;
         }
 
         $this->method = $method;
         $this->path = $path;
-        $this->params = array_merge($this->params, $params);
-        $this->headers = array_merge($this->headers, $headers);
+        $this->headers = $headers;
     }
 }
