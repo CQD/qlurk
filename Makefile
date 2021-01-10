@@ -9,4 +9,4 @@ installWithDev:
 	composer install -o --prefer-dist
 
 e2e: installWithDev
-	./vendor/bin/phpunit -c e2e-test/phpunit.xml --coverage-text
+	XDEBUG_MODE=coverage ./vendor/bin/phpunit -c e2e-test/phpunit.xml --coverage-text
