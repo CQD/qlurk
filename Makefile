@@ -1,12 +1,10 @@
-.PHONY: installNoDev installWithDev e2e
+.PHONY: e2e
 
 -include config.mk
 
-installNoDev:
-	composer install -o --prefer-dist --no-dev
+e2e: vendor/autoload.php
+	./vendor/bin/phpunit -c e2e-test/phpunit.xml
 
-installWithDev:
-	composer install -o --prefer-dist
+vendor/autoload.php:
+	composer install
 
-e2e: installWithDev
-	XDEBUG_MODE=coverage ./vendor/bin/phpunit -c e2e-test/phpunit.xml --coverage-text
