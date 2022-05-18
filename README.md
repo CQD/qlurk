@@ -1,8 +1,8 @@
-# Qlurk, the Plurk API library
+# Qlurk，噗浪 API PHP 函式庫
 
-[![Build result](https://api.travis-ci.org/CQD/qlurk.svg?branch=master)](https://travis-ci.org/CQD/qlurk)
+![Build result](https://github.com/CQD/qlurk/actions/workflows/e2e_test.yaml/badge.svg)
 
-`Qlurk` is a simple [Plurk API](https://www.plurk.com/API) library written in PHP
+`Qlurk` 是個用 PHP 寫成的簡單 [Plurk API](https://www.plurk.com/API) 函式庫
 
 ```php
 $qlurk = new \Qlurk\ApiClient(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
@@ -11,7 +11,7 @@ var_dump($resp);
 ```
 
 ```php
-// ask for request token
+// 取得 request token
 $qlurk = new \Qlurk\ApiClient(CONSUMER_KEY, CONSUMER_SECRET);
 $oauth = new Oauth($qlurk);
 
@@ -19,12 +19,12 @@ $r = $oauth->getRequestToken();
 $token = $r['oauth_token'];
 $tokenSecret = $r['oauth_token_secret'];
 
-// save $token and $tokenSecret to somewhere...
+// 把 $token 跟 $tokenSecret 存到某處...
 
-// auth via user interaction
-// call back with oauth_token and oauth_verifier
+// 使用者在介面上授權之後
+// 會透過 callback 帶回 oauth_token 跟 oauth_verifier
 
-// exchange request token for access token
+// 將 request token 換成 access token
 $qlurk = new \Qlurk\ApiClient(CONSUMER_KEY, CONSUMER_SECRET);
 $oauth = new Oauth($qlurk);
 $tokenSecret = getSecretFromStorage($token);
@@ -34,16 +34,20 @@ $resp = $qlurk->call('/APP/Timeline/getPlurk', ['plurk_id' => 134]);
 var_dump($resp);
 ```
 
-This package is inspired by [clsung](https://github.com/clsung)'s [plurkoauth](https://github.com/clsung/plurkoauth)
+套件靈感來自於 [clsung](https://github.com/clsung) 的 [plurkoauth](https://github.com/clsung/plurkoauth)
 
-# Installation
+# 系統需求
+- PHP 5.6 ~ 8.1
+- GuzzleHttp 6.x 或 7.x
 
-`qlurk` can be installed with composer.
+# 安裝
+
+`qlurk` 可以用 composer 安裝
 
 ```
 $ composer require qlurk/qlurk
 ```
 
-# Reference
-- [Official Plurk API document](https://www.plurk.com/API)
+# 參考閱讀
+- [Plurk API 官方文件](https://www.plurk.com/API)
 
