@@ -2,3 +2,5 @@ vendor/
 composer.lock
 build/
 config.mk
+.vscode/
+.phpunit.result.cache
