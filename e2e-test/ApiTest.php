@@ -6,19 +6,13 @@ use PHPUnit\Runner\Version as PHPUnitVersion;
 
 class ApiTest extends TestCase
 {
-    private static $apiClient;
-
-    public static function setUpBeforeClass()
-    {
-        static::$apiClient = new ApiClient(CONSUMER_KEY, CONSUMER_SECRET, TOKEN_KEY, TOKEN_SECRET);
-    }
-
     /**
      * @dataProvider apiProvider
      */
     public function testApi($path, $expected, $params = [])
     {
-        $result = static::$apiClient->call($path, $params);
+        $apiClient = new ApiClient(CONSUMER_KEY, CONSUMER_SECRET, TOKEN_KEY, TOKEN_SECRET);
+        $result = $apiClient->call($path, $params);
         if (is_array($expected)) {
             foreach ($expected as $key => $expectedValue) {
                 $this->assertEquals($expectedValue, $this->deepValue($key, $result));
@@ -37,7 +31,6 @@ class ApiTest extends TestCase
                 '/APP/echo',
                 ['data' => 'miew miew miew'],
                 ['data' => 'miew miew miew']
-
             ],
             [
                 '/APP/Profile/getPublicProfile',
@@ -61,7 +54,8 @@ class ApiTest extends TestCase
             [
                 '/APP/Timeline/uploadPicture',
                 function($params, $result){
-                    $this->assertTrue($this->isImageURL($result['full']) && $this->isImageURL($result['thumbnail']), json_encode($result));
+                    $this->assertTrue($this->isImageURL($result['full']), json_encode($result));
+                    $this->assertTrue($this->isImageURL($result['thumbnail']), json_encode($result));
                 },
                 ['image' => file_get_contents(__DIR__ . '/16.jpg')],
             ],
