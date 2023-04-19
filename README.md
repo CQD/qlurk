@@ -37,7 +37,7 @@ var_dump($resp);
 套件靈感來自於 [clsung](https://github.com/clsung) 的 [plurkoauth](https://github.com/clsung/plurkoauth)
 
 # 系統需求
-- PHP 5.6 ~ 8.1
+- PHP 5.6 ~ 8.2
 - GuzzleHttp 6.x 或 7.x
 
 # 安裝
